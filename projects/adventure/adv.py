@@ -29,7 +29,9 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
-
+# declare 'r'
+# save rooms that are visited "visited count"
+# edge cases
 
 # TRAVERSAL TEST
 visited_rooms = set()
