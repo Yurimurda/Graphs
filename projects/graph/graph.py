@@ -13,7 +13,7 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        if vertex
 
     def add_edge(self, v1, v2):
         """
@@ -131,7 +131,7 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if visited
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph

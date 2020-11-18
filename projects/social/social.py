@@ -1,4 +1,6 @@
 import random
+from util import Queue
+import copy
 
 class User:
     def __init__(self, name):
@@ -6,9 +8,9 @@ class User:
 
 class SocialGraph:
     def __init__(self):
-        self.last_id = 0
-        self.users = {}
-        self.friendships = {}
+        self.last_id = 0       
+        self.users = {}     
+        self.friendships = {} # adjacency list
 
     def add_friendship(self, user_id, friend_id):
         """
@@ -30,6 +32,11 @@ class SocialGraph:
         self.users[self.last_id] = User(name)
         self.friendships[self.last_id] = set()
 
+    def fisher_yates_shuffle(self, l):
+        for i in range(0, len(l)):
+            random_index = random.randint(i, len(l) - 1)
+            l[random_index], l[i] = l[i], l[random_index]
+
     def populate_graph(self, num_users, avg_friendships):
         """
         Takes a number of users and an average number of friendships
@@ -47,22 +54,30 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-        for i in range(0, num_users):
-            self.add_user(f"User {i+1}")
+        for i in range(num_users):
+            self.add_user(User)
 
         # Create friendships
-        potential_friendships = []
-        for user_id in self.users:
-            for friend_id in range(user_id + 1, len(self.users.keys()) + 1):
-                potential_friendships.append ( (user_id, friend_id) )
+        # if 1 is a friend of 2 and 2 is a friend of 1, count this as 2 friendships
+        potential_friendships = avg_friendships * num_users
+
+        # create a list with all possible friendship combinations
+        # friendship_combos = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
+        friendship_combos = []
+
+        # shuffle this list, then grab first N elements from the list. Import random.
+        for user_id in range(1, num_users + 1):
+            for friend_id in range(user_id + 1, num_users + 1):
+                friendship_combos.append((user_id, friend_id))
 
 
+        self.fisher_yates_shuffle(friendship_combos)
 
-        random.shuffle(potential_friendships)
-        num_friendships = num_users * avg_friendships // 2
-        for i in range (0, num_friendships):
-            friendship = potential_friendships[i]
+        friendships_to_make = friendship_combos[:(potential_friendships // 2)]
+
+        for friendship in friendships_to_make:
             self.add_friendship(friendship[0], friendship[1])
+        
         
 
     def get_all_social_paths(self, user_id):

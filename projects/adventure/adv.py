@@ -31,7 +31,7 @@ traversal_path = []
 
 # declare 'r'
 # save rooms that are visited "visited count"
-# edge cases
+# edge cases 
 
 # TRAVERSAL TEST
 visited_rooms = set()
