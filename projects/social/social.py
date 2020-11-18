@@ -1,6 +1,5 @@
 import random
 from util import Queue
-import copy
 
 class User:
     def __init__(self, name):
